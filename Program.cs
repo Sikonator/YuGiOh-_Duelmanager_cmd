@@ -45,7 +45,7 @@ namespace YuGiOh__Duelmanager_cmd
       }
       else
       {
-        Console.WriteLine("ERROR");
+        Console.WriteLine("error");
         return;
       }
       LP_Spieler1 = Start_LP;
@@ -75,7 +75,7 @@ namespace YuGiOh__Duelmanager_cmd
       }
       else
       {
-        Console.WriteLine("ERROR: UNGÜLTIGER SPIELER");
+        Console.WriteLine("error: ungültiger spieler");
         return -1;
       }
     }
@@ -94,7 +94,7 @@ namespace YuGiOh__Duelmanager_cmd
       }
       else
       {
-        Console.WriteLine("ERROR: UNGÜLTIGER SPIELER");
+        Console.WriteLine("error: ungültiger spieler");
         return -1;
       }
     }
@@ -155,7 +155,7 @@ namespace YuGiOh__Duelmanager_cmd
           }
         default:
           {
-            Console.WriteLine("ERROR: UNGÜLTIGE RECHENOPERATION");
+            Console.WriteLine("error: ungültige rechenoperation");
             LP_new = LP_old;
             break;
           }
@@ -194,10 +194,12 @@ namespace YuGiOh__Duelmanager_cmd
       int value;
       short player_id;
 
-      Console.BackgroundColor = ConsoleColor.Red;
-      Console.WriteLine("-------- WILKOMMEN ZUM YUGIOH! DUELMANAGER --------");
+      Console.BackgroundColor = ConsoleColor.DarkRed;
+      Console.ForegroundColor = ConsoleColor.Black;
+      Console.WriteLine("####        --------  WILKOMMEN ZUM YUGIOH! DUELMANAGER  --------           ");
       Console.WriteLine("");
       Console.BackgroundColor = ConsoleColor.Black;
+      Console.ForegroundColor = ConsoleColor.White;
       Console.WriteLine("Verfügbare Befehle:");
       Console.WriteLine(" - '![spieler][operation][wert]' bearbeiten von Spieler LP");
       Console.WriteLine(" * '!1-1800' (Beispiel)");
@@ -211,7 +213,8 @@ namespace YuGiOh__Duelmanager_cmd
       running = true;
 
       Console.WriteLine("");
-//      Console.WriteLine("################################################################################");
+      Console.BackgroundColor = ConsoleColor.DarkRed;
+      Console.ForegroundColor = ConsoleColor.Black;
       Console.WriteLine("####                          Zeit Für Ein                                  ");
       Console.WriteLine("####                                                                        ");
       Console.WriteLine("####     _|_|_|_|     _|      _|   _|_|_|_|   _|         _|                 ");
@@ -220,7 +223,8 @@ namespace YuGiOh__Duelmanager_cmd
       Console.WriteLine("####     _|      _|   _|      _|   _|         _|         _|                 ");
       Console.WriteLine("####     _|_|_|_|       _|_|_|     _|_|_|_|   _|_|_|_|   _|_|_|_|           ");
       Console.WriteLine("####                                                                        ");
-//      Console.WriteLine("################################################################################");
+      Console.BackgroundColor = ConsoleColor.Black;
+      Console.ForegroundColor = ConsoleColor.White;
       Console.WriteLine("");
       duelManager.Print_LP();
 
@@ -237,7 +241,15 @@ namespace YuGiOh__Duelmanager_cmd
           if (char.IsDigit(command[1]))
           {
             player_id = Convert.ToInt16(command.Substring(1, 1));
-            if (duelManager.Player_Exists(player_id))
+            int n;
+            if (!duelManager.Player_Exists(player_id))
+            {
+              Console.WriteLine("error: ungültiger spieler");
+            }
+            else if (!int.TryParse(command.Substring(3), out n))
+            {
+              Console.WriteLine("error: ungültiger wert");
+            } else
             {
               operation = command[2];
               value = Convert.ToInt32(command.Substring(3));

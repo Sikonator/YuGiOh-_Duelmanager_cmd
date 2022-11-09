@@ -75,7 +75,7 @@ namespace YuGiOh__Duelmanager_cmd
       }
       else
       {
-        Console.WriteLine("ERROR: UNGUELTIGER SPIELER");
+        Console.WriteLine("ERROR: UNGÜLTIGER SPIELER");
         return -1;
       }
     }
@@ -94,7 +94,7 @@ namespace YuGiOh__Duelmanager_cmd
       }
       else
       {
-        Console.WriteLine("ERROR: UNGUELTIGER SPIELER");
+        Console.WriteLine("ERROR: UNGÜLTIGER SPIELER");
         return -1;
       }
     }
@@ -155,7 +155,7 @@ namespace YuGiOh__Duelmanager_cmd
           }
         default:
           {
-            Console.WriteLine("ERROR: UNGUELTIGE RECHENOPERATION");
+            Console.WriteLine("ERROR: UNGÜLTIGE RECHENOPERATION");
             LP_new = LP_old;
             break;
           }
@@ -201,10 +201,10 @@ namespace YuGiOh__Duelmanager_cmd
       Console.WriteLine("Verfügbare Befehle:");
       Console.WriteLine(" - '![spieler][operation][wert]' bearbeiten von Spieler LP");
       Console.WriteLine(" * '!1-1800' (Beispiel)");
-      Console.WriteLine(" - 'reset[<lp>]'                 zurueckseten von Spieler LP");
+      Console.WriteLine(" - 'reset[<lp>]'                 zurückseten von Spieler LP");
       Console.WriteLine(" * 'reset' (Beispiel)");
       Console.WriteLine(" - 'lp'                          anzeigen von Spieler LP");
-      Console.WriteLine(" - Werkzeuge: 'coin' / 'dice'    Muenze und Wuerfel");
+      Console.WriteLine(" - Werkzeuge: 'coin' / 'dice'    Münze und Würfel");
       Console.WriteLine("");
 
       duelManager = new DuelManager(8000);
@@ -276,11 +276,15 @@ namespace YuGiOh__Duelmanager_cmd
           if (command.Length > 5)
           {
             value = Convert.ToInt32(command.Substring(5));
+            Console.WriteLine("resetting to {0}...", value);
             duelManager.Reset(value);
+            duelManager.Print_LP();
           }
           else
           {
+            Console.WriteLine("resetting...");
             duelManager.Reset();
+            duelManager.Print_LP();
           }
         }
         short winner = duelManager.Check_Winner();

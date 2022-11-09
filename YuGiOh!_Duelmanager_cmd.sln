@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuGiOh!_Duelmanager_cmd", "YuGiOh!_Duelmanager_cmd.csproj", "{556DD97A-F414-4072-871F-EE15E33BCC8C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{556DD97A-F414-4072-871F-EE15E33BCC8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{556DD97A-F414-4072-871F-EE15E33BCC8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{556DD97A-F414-4072-871F-EE15E33BCC8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{556DD97A-F414-4072-871F-EE15E33BCC8C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC841109-6C75-44D7-BD9B-6C04CBE1BA7B}
+	EndGlobalSection
+EndGlobal

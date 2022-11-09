@@ -13,7 +13,12 @@ namespace YuGiOh__Duelmanager_cmd
     static public int Dice(int size = 6)
     {
       Random value = new Random();
-      return value.Next(1, size+1);
+      return value.Next(1, size + 1);
+    }
+    static public int Coin()
+    {
+      Random value = new Random();
+      return value.Next(1, 3);
     }
   }
   class DuelManager
@@ -94,10 +99,21 @@ namespace YuGiOh__Duelmanager_cmd
       }
     }
 
-    public void Print_LP()
+    public void Print_LP(short player_id = 0)
     {
-      Console.WriteLine("-> Spieler 1: {0}", LP_Spieler1);
-      Console.WriteLine("-> Spieler 2: {0}", LP_Spieler2);
+      if (player_id == 0)
+      {
+        Console.WriteLine("-> Spieler 1: {0}", LP_Spieler1);
+        Console.WriteLine("-> Spieler 2: {0}", LP_Spieler2);
+      }
+      else if (player_id == 1)
+      {
+        Console.WriteLine("-> Spieler 1: {0}", LP_Spieler1);
+      }
+      else if (player_id == 2)
+      {
+        Console.WriteLine("-> Spieler 2: {0}", LP_Spieler2);
+      }
     }
 
     public void Do_Operation(short player_id, char operation, int value)
@@ -132,9 +148,14 @@ namespace YuGiOh__Duelmanager_cmd
             LP_new = LP_old / value;
             break;
           }
+        case '=':
+          {
+            LP_new = value;
+            break;
+          }
         default:
           {
-            Console.WriteLine("ERROR: UNGÜLTIGE RECHENOPERATION");
+            Console.WriteLine("ERROR: UNGUELTIGE RECHENOPERATION");
             LP_new = LP_old;
             break;
           }
@@ -177,17 +198,40 @@ namespace YuGiOh__Duelmanager_cmd
       Console.WriteLine("-------- WILKOMMEN ZUM YUGIOH! DUELMANAGER --------");
       Console.WriteLine("");
       Console.BackgroundColor = ConsoleColor.Black;
+      Console.WriteLine("Verfügbare Befehle:");
+      Console.WriteLine(" - '![spieler][operation][wert]' bearbeiten von Spieler LP");
+      Console.WriteLine(" * '!1-1800' (Beispiel)");
+      Console.WriteLine(" - 'reset[<lp>]'                 zurueckseten von Spieler LP");
+      Console.WriteLine(" * 'reset' (Beispiel)");
+      Console.WriteLine(" - 'lp'                          anzeigen von Spieler LP");
+      Console.WriteLine(" - Werkzeuge: 'coin' / 'dice'    Muenze und Wuerfel");
+      Console.WriteLine("");
 
       duelManager = new DuelManager(8000);
       running = true;
 
+      Console.WriteLine("");
+//      Console.WriteLine("################################################################################");
+      Console.WriteLine("####                          Zeit Für Ein                                  ");
+      Console.WriteLine("####                                                                        ");
+      Console.WriteLine("####     _|_|_|_|     _|      _|   _|_|_|_|   _|         _|                 ");
+      Console.WriteLine("####     _|      _|   _|      _|   _|         _|         _|                 ");
+      Console.WriteLine("####     _|      _|   _|      _|   _|_|_|_|   _|         _|                 ");
+      Console.WriteLine("####     _|      _|   _|      _|   _|         _|         _|                 ");
+      Console.WriteLine("####     _|_|_|_|       _|_|_|     _|_|_|_|   _|_|_|_|   _|_|_|_|           ");
+      Console.WriteLine("####                                                                        ");
+//      Console.WriteLine("################################################################################");
+      Console.WriteLine("");
       duelManager.Print_LP();
 
       while (running)
       {
+        Console.ForegroundColor = ConsoleColor.Green;
         Console.Write("~: ");
+        Console.ForegroundColor = ConsoleColor.Cyan;
         command = Console.ReadLine();
         operation = '0';
+        Console.ForegroundColor = ConsoleColor.White;
         if (command.StartsWith("!") & command.Length > 3)
         {
           if (char.IsDigit(command[1]))
@@ -198,7 +242,7 @@ namespace YuGiOh__Duelmanager_cmd
               operation = command[2];
               value = Convert.ToInt32(command.Substring(3));
               duelManager.Do_Operation(player_id, operation, value);
-              Console.WriteLine(duelManager.Get_Player_LP(player_id));
+              duelManager.Print_LP(player_id);
             }
           }
         }
@@ -206,34 +250,37 @@ namespace YuGiOh__Duelmanager_cmd
         {
           duelManager.Print_LP();
         }
-        else if (command.Length >= 4)
+        else if (command.ToUpper() == "COIN")
         {
-          if (command.Substring(0, 4).ToUpper() == "DICE")
+          int coin = Tools.Coin();
+          if (coin == 1)
           {
-            if (command.Length > 4)
-            {
-              value = Convert.ToInt32(command.Substring(4));
-              Console.WriteLine(Tools.Dice(value));
-            }
-            else
-            {
-              Console.WriteLine(Tools.Dice());
-            }
+            Console.WriteLine("Kopf");
+          }
+          else
+          {
+            Console.WriteLine("Zahl");
           }
         }
-        else if (command.Length >= 5)
+        else if (command.ToUpper() == "DICE")
         {
-          if (command.Substring(0, 5).ToUpper() == "RESET")
+          Console.WriteLine(Tools.Dice());
+        }
+        else if (command.ToUpper() == "EXIT")
+        {
+          Console.WriteLine("exiting...");
+          running = false;
+        }
+        else if (command.ToUpper().StartsWith("RESET"))
+        {
+          if (command.Length > 5)
           {
-            if (command.Length > 5)
-            {
-              value = Convert.ToInt32(command.Substring(6));
-              duelManager.Reset(value);
-            }
-            else
-            {
-              duelManager.Reset();
-            }
+            value = Convert.ToInt32(command.Substring(5));
+            duelManager.Reset(value);
+          }
+          else
+          {
+            duelManager.Reset();
           }
         }
         short winner = duelManager.Check_Winner();
